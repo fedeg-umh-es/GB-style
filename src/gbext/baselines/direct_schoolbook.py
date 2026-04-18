@@ -1,0 +1,35 @@
+"""
+Baseline implementation of Direct Schoolbook Multiplication over GF(2^m)[x]/<g(x)>.
+"""
+
+from __future__ import annotations
+import time
+from gbext.poly import core
+from gbext.types import Context, Stats
+
+def multiply(a: list[int], b: list[int], g: list[int], p_full: int, m: int, ctx: Context) -> tuple[list[int], Stats]:
+    """
+    Directly multiply a and b in GF(2^m)[x], then reduce modulo g.
+    """
+    stats = Stats()
+    
+    start_time = time.perf_counter() if ctx.track_timing else 0
+    
+    # 1. Schoolbook multiplication
+    start_mul = time.perf_counter() if ctx.track_timing else 0
+    c_unreduced = core.mul_schoolbook(a, b, p_full, m)
+    if ctx.track_timing:
+        stats.accumulation_time = time.perf_counter() - start_mul
+        
+    # 2. Modulo reduction
+    start_red = time.perf_counter() if ctx.track_timing else 0
+    c_reduced = core.reduce_mod(c_unreduced, g, p_full, m)
+    if ctx.track_timing:
+        stats.reduction_time = time.perf_counter() - start_red
+        stats.total_time = time.perf_counter() - start_time
+        
+    if ctx.track_branches:
+        # Minimal proxy: just proxy count = len(a)*len(b) iterations
+        stats.iteration_count = len(a) * len(b)
+        
+    return c_reduced, stats

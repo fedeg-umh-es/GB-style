@@ -1,0 +1,9 @@
+instance_id,m,k,field_modulus,ring_modulus_g,modulus_weight,modulus_density,modulus_family,notes
+m4_k8_dense,4,8,19,dense_random,9,1.0,dense,Testing small GF(2^m) and dense ring ideal
+m4_k16_dense,4,16,19,dense_random,17,1.0,dense,Scaling k
+m8_k16_dense,8,16,283,dense_random,17,1.0,dense,Medium GF(2^m) AES poly
+m8_k16_trinomial,8,16,283,trinomial_random,3,0.18,trinomial,Sparse ring polynomial for reduction evaluation
+m8_k32_dense,8,32,283,dense_random,33,1.0,dense,Medium complexity case
+m8_k32_trinomial,8,32,283,trinomial_random,3,0.09,trinomial,Sparse medium case
+m16_k32_dense,16,32,65581,dense_random,33,1.0,dense,Larger field case
+m16_k64_pentanomial,16,64,65581,pentanomial_random,5,0.07,pentanomial,Larger case with sparse reduction

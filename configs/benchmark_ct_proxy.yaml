@@ -1,0 +1,24 @@
+experiment:
+  seed: 42
+  output_dir: results
+  log_level: INFO
+
+fields:
+  m_values: [8]
+  irreducibles:
+    8: 27
+  backend: poly
+
+poly:
+  k_values: [8, 16, 32]
+
+ct_proxy:
+  n_random_inputs: 1000
+  methods:
+    - direct_schoolbook
+    - gb_schoolbook
+    - gb_karatsuba_k
+  # Metrics to collect per method
+  collect_timing_variance: true
+  collect_branch_counts: true   # via instrumented Python
+  collect_access_counts: true

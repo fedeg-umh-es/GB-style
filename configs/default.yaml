@@ -1,0 +1,39 @@
+# Default configuration for GB-style arithmetic experiments
+experiment:
+  seed: 42
+  output_dir: results
+  log_level: INFO
+
+fields:
+  m_values: [4, 8, 16]
+  # Irreducible polynomials as integer bitmasks (degree-m bit is implicit 1)
+  # GF(2^4): x^4+x+1 -> 0b10011 = 19 (with leading bit) -> store as 0b0011 = 3
+  # GF(2^8): x^8+x^4+x^3+x+1 -> AES poly -> 0x1B
+  # GF(2^16): x^16+x^5+x^3+x+1 -> 0x002B
+  irreducibles:
+    4: 3        # x^4+x+1 lower bits
+    8: 27       # x^8+x^4+x^3+x+1 lower bits (0x1B)
+    16: 43      # x^16+x^5+x^3+x+1 lower bits (0x2B)
+  backend: poly  # poly | table
+
+poly:
+  k_values: [4, 8, 16, 32]
+  # g(x) moduli over GF(2^m) stored as coefficient lists (degree k, monic, coeff[i]=GF(2^m) elem)
+  # For correctness tests only small k used; benchmark uses larger k
+  dense_moduli: true
+  sparse_moduli: true  # use trinomials/pentanomials when available
+
+benchmark:
+  n_trials: 100
+  warmup: 10
+  batch_sizes: [1, 10, 100]
+  methods:
+    - direct_schoolbook
+    - direct_karatsuba
+    - gb_schoolbook
+    - gb_karatsuba_k
+
+correctness:
+  m_values: [2, 4, 8]
+  k_values: [2, 4, 8, 16]
+  n_pairs_per_config: 50

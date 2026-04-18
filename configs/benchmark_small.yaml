@@ -1,0 +1,31 @@
+experiment:
+  seed: 42
+  output_dir: results
+  log_level: INFO
+
+fields:
+  m_values: [4, 8]
+  irreducibles:
+    4: 3
+    8: 27
+  backend: poly
+
+poly:
+  k_values: [4, 8, 16]
+  dense_moduli: true
+  sparse_moduli: true
+
+benchmark:
+  n_trials: 200
+  warmup: 20
+  batch_sizes: [1, 50]
+  methods:
+    - direct_schoolbook
+    - direct_karatsuba
+    - gb_schoolbook
+    - gb_karatsuba_k
+
+correctness:
+  m_values: [2, 4, 8]
+  k_values: [2, 4, 8]
+  n_pairs_per_config: 100
