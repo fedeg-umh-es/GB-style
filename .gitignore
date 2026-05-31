@@ -14,3 +14,6 @@ results/logs/*.log
 data/raw/
 *.parquet
 *.DS_Store
+~$*
+**/~$*
+**/unpacked/
