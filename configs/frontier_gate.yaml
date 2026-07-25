@@ -17,11 +17,13 @@ grid:
 
 cost_model:
   rho_var: 1.0
-  # Symbolic sensitivity grid for one multiplication by a fixed GF(2^m) constant.
-  # These are scenario weights, not measured hardware costs.
+  # Scenario weights for one multiplication by a fixed GF(2^m) constant.
+  # They are not measured hardware costs.
   rho_const_grid: [0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0]
 
 decision:
   min_candidate_instances: 20
   min_distinct_k: 4
   min_distinct_supports: 8
+  min_discovery_balanced_accuracy: 0.90
+  min_holdout_balanced_accuracy: 0.85
