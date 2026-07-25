@@ -1,0 +1,29 @@
+experiment:
+  seed: 1195525715  # 0x47424653, "GBFS"
+  output_dir: results/frontier_gate
+
+validation:
+  random_trials: 128
+
+grid:
+  m_values: [2, 4, 8]
+  k_values: [2, 3, 4, 5, 6, 8, 12, 16, 24, 32]
+  weights: [2, 3, 5]
+  coefficient_classes:
+    - binary
+    - repeated_nonunit
+    - distinct_nonunit
+  max_supports_per_k_weight: 24
+
+cost_model:
+  rho_var: 1.0
+  # Scenario weights for one multiplication by a fixed GF(2^m) constant.
+  # They are not measured hardware costs.
+  rho_const_grid: [0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0]
+
+decision:
+  min_candidate_instances: 20
+  min_distinct_k: 4
+  min_distinct_supports: 8
+  min_discovery_balanced_accuracy: 0.90
+  min_holdout_balanced_accuracy: 0.85
