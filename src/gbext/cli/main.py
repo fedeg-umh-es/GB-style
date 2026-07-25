@@ -8,6 +8,7 @@ from pathlib import Path
 import typer
 
 from gbext.experiments import benchmark_matrix, correctness_matrix, frontier_gate
+from gbext.frontier.analysis import analyze_frontier
 
 app = typer.Typer(help="GB-style extension-field arithmetic experimental CLI")
 
@@ -40,9 +41,20 @@ def run_frontier_gate(
         help="Preregistered exact-operation frontier configuration",
     ),
 ) -> None:
-    """Run the no-timing SEP/FUS binary research gate."""
-    parquet_path, decision_path = frontier_gate.run_frontier_gate(config)
+    """Run the no-timing SEP/FUS exact-operation sweep."""
+    parquet_path, _ = frontier_gate.run_frontier_gate(config)
+    decision_path = analyze_frontier(config, parquet_path)
     print(f"Frontier data: {parquet_path}")
+    print(f"Decision: {decision_path}")
+
+
+@app.command("analyze-frontier")
+def analyze_frontier_command(
+    config: Path = typer.Option("configs/frontier_gate.yaml", "--config"),
+    parquet: Path | None = typer.Option(None, "--parquet"),
+) -> None:
+    """Recompute the preregistered discovery/holdout decision."""
+    decision_path = analyze_frontier(config, parquet)
     print(f"Decision: {decision_path}")
 
 
